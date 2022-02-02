@@ -1,4 +1,6 @@
 {
   "port": 8080,
-  "mongoUri": "mongodb+srv://Matthew:7458219630@cluster0.sjuja.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+  "mongoUri": "mongodb+srv://Matthew:7458219630@cluster0.sjuja.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+  "accessSecret": "secret access",
+  "refreshSecret": "secret refresh"
 }

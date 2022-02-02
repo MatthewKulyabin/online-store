@@ -14,17 +14,7 @@ const PORT = config.get('port') ?? 8080;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-// app.use('/api', router);
-
-app.get('/api/category', async (req, res) => {
-  const category = await Category.find();
-  res.send(category);
-});
-
-app.get('/api/product', async (req, res) => {
-  const product = await Product.find();
-  res.send(product);
-});
+app.use('/api', router);
 
 const start = async () => {
   try {

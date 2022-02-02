@@ -6,6 +6,11 @@ const shema = new Schema(
     count: { type: Number, required: true },
     price: { type: Number, required: true },
     photo: { type: String, required: true },
+    categoryId: {
+      type: Schema.Types.ObjectId,
+      ref: 'Category',
+      required: true,
+    },
   },
   {
     timestamps: { createdAt: 'publish_date' },
