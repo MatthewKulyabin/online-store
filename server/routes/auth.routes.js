@@ -45,6 +45,7 @@ router.post('/signUp', [
           .toString(36)
           .substring(7)}.svg`,
         ...req.body,
+        role: 'user',
         password: hashedPassword,
       });
 

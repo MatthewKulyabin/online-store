@@ -5,8 +5,6 @@ const mongoose = require('mongoose');
 
 const initDatabase = require('./startUp/initDatabase');
 const router = require('./routes');
-const Category = require('./models/Category');
-const Product = require('./models/Product');
 
 const app = express();
 

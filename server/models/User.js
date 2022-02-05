@@ -6,11 +6,7 @@ const schema = new Schema(
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     image: { type: String },
-    roleId: {
-      type: Schema.Types.ObjectId,
-      ref: 'Role',
-      required: true,
-    },
+    role: { type: String, required: true },
   },
   {
     timestamps: true,
