@@ -2,17 +2,20 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Loader from '../../common/loader';
-import { useProduct } from '../../../hooks/useProduct';
 import { Col, Image } from '../../common/containers';
 import { Table } from '../../common/table';
 import { Text } from '../../common/text';
 import Edit from '../../common/icons/edit';
 import Delete from '../../common/icons/delete';
 import { useSelector } from 'react-redux';
-import { getCategoryById } from '../../../store/category';
+import { getProductState } from '../../../store/product';
+import { getCategoryState } from '../../../store/category';
 
 const AdminTable = ({ choseProductId, onChoseId }) => {
-  const { isLoadingP, products } = useProduct();
+  const { entities: products, isLoading: isLoadingP } = useSelector(
+    getProductState()
+  );
+  const { entities: categories } = useSelector(getCategoryState());
 
   const columns = {
     _id: {
@@ -33,7 +36,7 @@ const AdminTable = ({ choseProductId, onChoseId }) => {
       path: 'categoryId',
       name: 'Category',
       component: (product) => (
-        <Text>{useSelector(getCategoryById(product.categoryId)).name}</Text>
+        <Text>{categories.find((c) => c._id === product.categoryId).name}</Text>
       ),
     },
     price: {

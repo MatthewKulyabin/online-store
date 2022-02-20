@@ -2,6 +2,8 @@ const express = require('express');
 const config = require('config');
 const chalk = require('chalk');
 const mongoose = require('mongoose');
+const cors = require('cors');
+const fileUpload = require('express-fileupload');
 
 const initDatabase = require('./startUp/initDatabase');
 const router = require('./routes');
@@ -12,6 +14,10 @@ const PORT = config.get('port') ?? 8080;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(cors());
+app.use(fileUpload());
+
+app.use('/public', express.static('public'));
 app.use('/api', router);
 
 const start = async () => {

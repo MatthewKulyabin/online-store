@@ -13,6 +13,7 @@
     ["Main", "/"],
     ["Admin", "/admin"],
     ["Cart", "/cart"],
-    ["Login/SignUp", "/login"]
+    ["Login/SignUp", "/login"],
+    ["Account", "/account"]
   ]
 }

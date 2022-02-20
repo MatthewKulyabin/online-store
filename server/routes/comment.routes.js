@@ -9,7 +9,8 @@ router
   .route('/')
   .get(async (req, res) => {
     try {
-      const list = await Comment.find();
+      const { orderBy, equalTo } = req.query;
+      const list = await Comment.find({ [orderBy]: equalTo });
       res.status(200).json(list);
     } catch (error) {
       res.status(500).json({
@@ -19,7 +20,6 @@ router
   })
   .post(auth, async (req, res) => {
     try {
-      console.log(req.body, req.user);
       const newComment = await Comment.create({
         ...req.body,
         userId: req.user._id,

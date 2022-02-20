@@ -13,7 +13,7 @@ router
       const receivedMessages = await Message.find({ receiverId: req.user._id });
       const sendMessages = await Message.find({ senderId: req.user._id });
 
-      res.status(200).json({ receivedMessages, sendMessages });
+      res.status(200).json([...receivedMessages, ...sendMessages]);
     } catch (error) {
       res.status(500).json({
         message: 'Error occured on server. Try latter',
@@ -22,19 +22,9 @@ router
   })
   .post(auth, async (req, res) => {
     try {
-      const sender = await User.findById(req.user._id);
-      let receiver = await User.find({ role: 'admin' });
-      receiver = receiver[0];
-
-      let receiverId = receiver._id;
-      if (sender.role === 'admin') {
-        receiverId = req.body.receiverId;
-      }
-
       const newMessage = await Message.create({
         ...req.body,
-        receiverId,
-        senderId: sender._id,
+        senderId: req.user._id,
       });
       res.status(201).send(newMessage);
     } catch (error) {

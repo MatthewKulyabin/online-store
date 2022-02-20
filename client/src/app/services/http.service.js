@@ -11,13 +11,14 @@ axios.interceptors.request.use(
   async (config) => {
     const expiresDate = localStorageService.getTokenExpiresDate();
     const refreshToken = localStorageService.getRefreshToken();
-    const isExpired = refreshToken && expiresDate < Date.now();
+    const isExpired =
+      refreshToken !== 'undefined' && refreshToken && expiresDate < Date.now();
 
     if (isExpired) {
-      const data = await authService.refreshToken();
-
+      const data = await authService.refreshToken(refreshToken);
       localStorageService.setTokens(data);
     }
+
     const accessToken = localStorageService.getAccessToken();
     if (accessToken) {
       config.headers = {
@@ -33,7 +34,6 @@ axios.interceptors.request.use(
 
 axios.interceptors.response.use(
   (res) => {
-    console.log(res);
     res.data = { content: res.data };
     return res;
   },
@@ -54,6 +54,7 @@ const httpService = {
   get: axios.get,
   post: axios.post,
   put: axios.put,
+  patch: axios.patch,
   delete: axios.delete,
 };
 

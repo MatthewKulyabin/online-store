@@ -60,6 +60,11 @@ const Product = ({ product, imageStyle, ...rest }) => {
                 product.publish_date
               ).toLocaleString()}`}</SmallText>
             </Paragraph>
+            <Paragraph className="card-text">
+              <SmallText className="text-muted">{`Updated Date: ${new Date(
+                product.updatedAt
+              ).toLocaleString()}`}</SmallText>
+            </Paragraph>
           </div>
         </div>
         <Col>

@@ -6,6 +6,9 @@ const productSlice = createSlice({
   name: 'product',
   initialState: {
     entities: [],
+    filteredEntities: [],
+    sortedEntities: [],
+    searchedEntity: [],
     isLoading: true,
     error: null,
   },
@@ -45,6 +48,47 @@ const productSlice = createSlice({
     productUpdatedFailed: (state, action) => {
       state.error = action.payload;
     },
+
+    productFiltered: (state, action) => {
+      if (action.payload === '0') {
+        state.filteredEntities = [];
+        return;
+      }
+      state.sortedEntities = [];
+
+      state.filteredEntities = state.entities.filter(
+        (p) => p.categoryId === action.payload
+      );
+    },
+    productSorted: (state, action) => {
+      state.filteredEntities = [];
+      let { item, order } = action.payload;
+
+      item = item[0].toLowerCase() + item.slice(1);
+      console.log(item);
+
+      const arr = JSON.parse(JSON.stringify(state.entities));
+      state.sortedEntities = arr.sort((a, b) => {
+        if (typeof a[item] === 'string') {
+          return order === 'asc'
+            ? a[item].localeCompare(b[item])
+            : b[item].localeCompare(a[item]);
+        }
+        return order === 'asc' ? a[item] - b[item] : b[item] - a[item];
+      });
+    },
+    productSearched: (state, action) => {
+      const text = action.payload.toLowerCase();
+      const foundedProd = state.entities.find(
+        (prod) => prod.name.toLowerCase() === text
+      );
+
+      if (foundedProd) {
+        state.searchedEntity = [foundedProd];
+      } else {
+        state.searchedEntity = [];
+      }
+    },
   },
 });
 
@@ -62,6 +106,10 @@ const {
 
   productUpdated,
   productUpdatedFailed,
+
+  productSorted,
+  productFiltered,
+  productSearched,
 } = actions;
 
 export const loadProductsList = () => async (dispatch) => {
@@ -79,6 +127,7 @@ export const deleteProduct = (id) => async (dispatch) => {
     await productService.delete(id);
     dispatch(productDeleted(id));
   } catch (error) {
+    console.dir(error);
     dispatch(productDeletedFailed(error));
   }
 };
@@ -88,19 +137,38 @@ export const createProduct = (data) => async (dispatch) => {
     const { content } = await productService.post(data);
     dispatch(productCreated(content));
   } catch (error) {
+    console.dir(error);
     dispatch(productCreatedFailed(error));
   }
 };
 
 export const updateProduct = (id, data) => async (dispatch) => {
   try {
-    const { content } = await productService.put(id, data);
+    const { content } = await productService.patch(id, data);
     dispatch(productUpdated(content));
   } catch (error) {
     dispatch(productUpdatedFailed(error));
   }
 };
 
+export const sortProducts =
+  (item, order = 'asc') =>
+  (dispatch) => {
+    dispatch(productSorted({ item, order }));
+  };
+
+export const filterProducts = (id) => (dispatch) => {
+  dispatch(productFiltered(id));
+};
+
+export const searchProduct = (text) => (dispatch) => {
+  dispatch(productSearched(text));
+};
+
 export const getProductState = () => (state) => state.product;
+export const getProductById = (id) => (state) =>
+  state.product.entities.find((p) => p._id === id);
+export const getFilteredProducts = (categoryId) => (state) =>
+  state.product.entities.filter((p) => p.categoryId === categoryId);
 
 export default productReducer;

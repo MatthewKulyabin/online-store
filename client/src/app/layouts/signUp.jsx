@@ -62,7 +62,7 @@ const SignUp = () => {
             style={{ width: '100%' }}
             type="submit"
           >
-            Login
+            Sign Up
           </Button>
           <Paragraph className="mt-3">
             Already Have an Account?

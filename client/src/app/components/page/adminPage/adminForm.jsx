@@ -8,18 +8,21 @@ import FormComponent, {
   NumberField,
 } from '../../common/form';
 import Joi from 'joi';
-import { useProduct } from '../../../hooks/useProduct';
 import { Col, InputGroup } from '../../common/containers';
 import { Button, Header } from '../../common/text';
 import { useDispatch, useSelector } from 'react-redux';
-import { createProduct, updateProduct } from '../../../store/product';
+import {
+  createProduct,
+  getProductById,
+  updateProduct,
+} from '../../../store/product';
 import { getCategoryState } from '../../../store/category';
 
 const AdminForm = ({ choseId }) => {
   const dispatch = useDispatch();
 
   const [defaultData, setDefaultData] = useState();
-  const { getProduct } = useProduct();
+  const product = useSelector(getProductById(choseId));
 
   const { entities: categories } = useSelector(getCategoryState());
 
@@ -27,16 +30,15 @@ const AdminForm = ({ choseId }) => {
     name: Joi.string().min(2).max(35).required(),
     price: Joi.number().min(0.05).required(),
     count: Joi.number().min(1).required(),
-    photo: Joi.string().required(),
+    photo: Joi.required(),
     categoryId: Joi.string().required(),
   });
 
   useEffect(() => {
-    const { name, count, price, photo, categoryId } = getProduct(choseId) || {
+    const { name, count, price, photo, categoryId } = product || {
       name: '',
       count: 0,
       price: 0,
-      photo: '',
       categoryId: '',
     };
     setDefaultData({ name, count, price, photo, categoryId });

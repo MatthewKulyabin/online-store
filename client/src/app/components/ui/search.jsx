@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { TextField } from '../common/form';
 
-const Search = ({ onSearch }) => {
+const Search = ({ onSearch, placeholder }) => {
   const [search, setSearch] = useState({ text: '' });
 
   useEffect(() => {
@@ -17,11 +17,12 @@ const Search = ({ onSearch }) => {
   return (
     <div className="mb-3">
       <TextField
-        label="Search"
+        label={(!placeholder && 'Search') || ''}
         name="text"
         onChange={handleChange}
         value={search.text}
         className="form-control"
+        {...{ placeholder }}
       />
     </div>
   );
@@ -29,6 +30,7 @@ const Search = ({ onSearch }) => {
 
 Search.propTypes = {
   onSearch: PropTypes.func,
+  placeholder: PropTypes.string,
 };
 
 export default Search;

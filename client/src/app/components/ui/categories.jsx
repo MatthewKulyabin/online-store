@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Col, ListGroup } from '../common/containers';
-import { useProduct } from '../../hooks/useProduct';
+import { useDispatch } from 'react-redux';
+import { filterProducts } from '../../store/product';
 
 const Categories = ({ categories }) => {
-  const { filterProductsByCategory } = useProduct();
+  const dispatch = useDispatch();
 
   const data = categories.map((category) => {
     const newCategory = {
@@ -18,7 +19,7 @@ const Categories = ({ categories }) => {
   data.push({ _id: '0', text: 'Show All' });
 
   const handleChooseCategory = (category) => {
-    filterProductsByCategory(category._id);
+    dispatch(filterProducts(category._id));
   };
   return (
     <Col className="-md-4 mb-3">

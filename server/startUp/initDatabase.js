@@ -1,18 +1,11 @@
 const Category = require('../models/Category');
-const Product = require('../models/Product');
 const categoryMock = require('../mock/category.json');
-const productMock = require('../mock/product.json');
 
 module.exports = async () => {
   const category = await Category.find();
-  const product = await Product.find();
 
   if (category.length !== categoryMock.length) {
     await createInitialEntity(Category, categoryMock);
-  }
-
-  if (product.length !== productMock.length) {
-    await createInitialEntity(Product, productMock);
   }
 };
 

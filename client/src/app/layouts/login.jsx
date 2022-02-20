@@ -4,10 +4,16 @@ import Joi from 'joi';
 import FormComponent, { TextField } from '../components/common/form';
 import { Col, Row } from '../components/common/containers';
 import { Button, Paragraph, Anchor } from '../components/common/text';
+import { useDispatch } from 'react-redux';
+import { login } from '../store/user';
 
 const Login = () => {
+  const dispatch = useDispatch();
+
   const validatorConfig = Joi.object({
-    login: Joi.string().min(5).max(35).required(),
+    email: Joi.string()
+      .email({ tlds: { allow: false } })
+      .required(),
     password: Joi.string()
       .pattern(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/)
       .required()
@@ -19,8 +25,8 @@ const Login = () => {
       }),
   });
 
-  const handleSubmit = () => {
-    console.log('submit');
+  const handleSubmit = (data) => {
+    dispatch(login(data));
   };
 
   return (
@@ -29,10 +35,10 @@ const Login = () => {
         <FormComponent
           validatorConfig={validatorConfig}
           onSubmit={handleSubmit}
-          defaultData={{ login: '', password: '' }}
+          defaultData={{ email: '', password: '' }}
         >
-          <TextField name="login" label="Login" autoFocus />
-          <TextField name="password" label="Password" />
+          <TextField name="email" label="Email" autoFocus />
+          <TextField name="password" label="Password" type="password" />
           <Button
             className="btn-primary"
             style={{ width: '100%' }}

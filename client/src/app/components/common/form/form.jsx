@@ -1,6 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { changeJoiErrorMessage } from '../../../core/utils';
+import { useSelector } from 'react-redux';
+import { getUserAuthStatus } from '../../../store/user';
 
 const FormComponent = ({
   defaultData,
@@ -10,6 +12,20 @@ const FormComponent = ({
 }) => {
   const [data, setData] = useState({});
   const [errors, setErrors] = useState({});
+
+  const authError = useSelector(getUserAuthStatus());
+
+  useEffect(() => {
+    if (authError?.login) {
+      setErrors({
+        email: authError.login,
+        password: authError.login,
+      });
+    }
+    if (authError?.signUp) {
+      setErrors({ email: authError.signUp });
+    }
+  }, [authError]);
 
   useEffect(() => {
     setData(defaultData || {});

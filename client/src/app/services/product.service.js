@@ -14,12 +14,47 @@ const productService = {
   },
 
   post: async (content) => {
-    const { data } = await httpService.post(productEndPoint, content);
+    const payload = new FormData();
+
+    const photo = content.photo;
+    delete content.photo;
+
+    const json = JSON.stringify(content);
+    const blob = new Blob([json], {
+      type: 'application/json',
+    });
+
+    payload.append('photo', photo);
+    payload.append('content', blob);
+
+    const { data } = await httpService.post(productEndPoint, payload, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+
     return data;
   },
 
-  put: async (id, content) => {
-    const { data } = await httpService.put(productEndPoint + id, content);
+  patch: async (id, content) => {
+    const payload = new FormData();
+
+    const photo = content.photo;
+    delete content.photo;
+
+    const json = JSON.stringify(content);
+    const blob = new Blob([json], {
+      type: 'application/json',
+    });
+
+    payload.append('photo', photo);
+    payload.append('content', blob);
+
+    const { data } = await httpService.patch(productEndPoint + id, payload, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
     return data;
   },
 };

@@ -7,5 +7,6 @@ router.use('/product', require('./product.routes'));
 router.use('/auth', require('./auth.routes'));
 router.use('/comment', require('./comment.routes'));
 router.use('/message', require('./message.routes'));
+router.use('/user', require('./user.routes'));
 
 module.exports = router;
