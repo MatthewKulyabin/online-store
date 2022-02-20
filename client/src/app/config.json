@@ -1,0 +1,19 @@
+{
+  "apiEndPoint": "http://localhost:8080/api/",
+  "tableHeadData": [
+    "_id",
+    "Name",
+    "Category",
+    "Price",
+    "Count",
+    "Photo",
+    "Actions"
+  ],
+  "navPaths": [
+    ["Main", "/"],
+    ["Admin", "/admin"],
+    ["Cart", "/cart"],
+    ["Login/SignUp", "/login"],
+    ["Account", "/account"]
+  ]
+}
