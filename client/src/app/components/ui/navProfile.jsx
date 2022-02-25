@@ -3,6 +3,8 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import { getCurrentUserData } from '../../store/user';
+import { Dropdown, Image } from '../common/containers';
+import { Button, Text } from '../common/text';
 
 const NavProfile = () => {
   const currentUser = useSelector(getCurrentUserData());
@@ -15,28 +17,28 @@ const NavProfile = () => {
   if (!currentUser) return 'Loading...';
 
   return (
-    <div className="dropdown">
-      <div
-        className="btn dropdown-toggle d-flex align-items-center"
+    <Dropdown>
+      <Button
+        className="dropdown-toggle d-flex align-items-center"
         onClick={toggleMenu}
       >
-        <div className="me-2 text-primary">{currentUser.name}</div>
-        <img
+        <Text className="me-2 text-primary">{currentUser.name}</Text>
+        <Image
           src={currentUser.image}
           alt="avatar"
           height={40}
           className="img-responsive rounded-circle"
         />
-      </div>
-      <div className={`w-100 dropdown-menu ${isOpen ? 'show' : ''}`}>
+      </Button>
+      <Dropdown className={`-menu w-100 ${isOpen ? 'show' : ''}`}>
         <Link to={`/user/${currentUser._id}`} className="dropdown-item">
           Profile
         </Link>
         <Link to="/logout" className="dropdown-item">
           Log Out
         </Link>
-      </div>
-    </div>
+      </Dropdown>
+    </Dropdown>
   );
 };
 

@@ -44,7 +44,6 @@ const Cart = () => {
   const handleBuy = () => {
     cart.forEach((c) => {
       let prevCount = products.find((p) => p._id === c._id).count;
-      console.log(prevCount);
       dispatch(deleteCart(c._id));
       dispatch(
         updateProduct(c._id, {

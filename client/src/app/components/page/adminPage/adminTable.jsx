@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Loader from '../../common/loader';
 import { Col, Image } from '../../common/containers';
 import { Table } from '../../common/table';
 import { Text } from '../../common/text';
@@ -12,9 +11,7 @@ import { getProductState } from '../../../store/product';
 import { getCategoryState } from '../../../store/category';
 
 const AdminTable = ({ choseProductId, onChoseId }) => {
-  const { entities: products, isLoading: isLoadingP } = useSelector(
-    getProductState()
-  );
+  const { entities: products } = useSelector(getProductState());
   const { entities: categories } = useSelector(getCategoryState());
 
   const columns = {
@@ -86,16 +83,14 @@ const AdminTable = ({ choseProductId, onChoseId }) => {
   };
 
   return (
-    (!isLoadingP && (
-      <Col className="-md-8">
-        <Table
-          className="table-bordered border-primary"
-          style={{ width: '100%', marginLeft: '5%', marginRight: '5%' }}
-          columns={columns}
-          data={products}
-        ></Table>
-      </Col>
-    )) || <Loader />
+    <Col className="-md-8">
+      <Table
+        className="table-bordered border-primary"
+        style={{ width: '100%', marginLeft: '5%', marginRight: '5%' }}
+        columns={columns}
+        data={products}
+      ></Table>
+    </Col>
   );
 };
 

@@ -1,35 +1,38 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { Card, Row, Col, Image, Flex } from '../../common/containers';
+import { Header } from '../../common/text';
+
 const DialogsPanelCard = ({ u, onClick, chosedDialog }) => {
   return (
-    <a
+    <Card
       onClick={() => onClick(u._id)}
-      className={`card border-0 text-reset btn p-0 ${
+      className={`border-0 text-reset btn p-0 ${
         u._id === chosedDialog ? 'bg-primary' : 'bg-light'
       }`}
     >
-      <div className="card-body">
-        <div className="row gx-5">
-          <div className="col-auto">
-            <div className="avatar avatar-online">
-              <img
-                src={u.image}
-                alt="#"
-                className="rounded-circle"
-                width="50"
-              />
-            </div>
-          </div>
+      <Card className="-body">
+        <Row className="gx-5">
+          <Col className="-auto">
+            <Image
+              src={u.image}
+              alt="#"
+              className="rounded-circle"
+              width="50"
+            />
+          </Col>
 
-          <div className="col">
-            <div className="d-flex align-items-center mb-3">
-              <h5 className="me-auto mb-0">{u.name}</h5>
-            </div>
-          </div>
-        </div>
-      </div>
-    </a>
+          <Col>
+            <Flex className="align-items-center mb-3">
+              <Header size={5} className="me-auto mb-0">
+                {u.name}
+              </Header>
+            </Flex>
+          </Col>
+        </Row>
+      </Card>
+    </Card>
   );
 };
 

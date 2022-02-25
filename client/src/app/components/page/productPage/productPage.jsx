@@ -12,6 +12,7 @@ import AddCommentForm from '../../ui/comments/addCommentForm';
 import Comment from '../../ui/comments/comment';
 import { Header } from '../../common/text';
 import Product from '../../ui/product/product';
+import CommentLoader from '../../ui/hoc/commentLoader';
 
 const ProductPage = () => {
   const dispatch = useDispatch();
@@ -30,7 +31,7 @@ const ProductPage = () => {
   };
 
   return (
-    <>
+    <CommentLoader>
       <Product
         product={useSelector(getProductById(productId))}
         imageStyle={{ height: '100%' }}
@@ -48,7 +49,7 @@ const ProductPage = () => {
           />
         ))) || <Header size={6}>There are no comments yet. Be first!</Header>}
       <AddCommentForm {...{ productId }} />
-    </>
+    </CommentLoader>
   );
 };
 

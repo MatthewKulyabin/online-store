@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import { TextField } from '../common/form';
+import { Margin } from '../common/containers';
 
 const Search = ({ onSearch, placeholder }) => {
   const [search, setSearch] = useState({ text: '' });
@@ -15,7 +16,7 @@ const Search = ({ onSearch, placeholder }) => {
   };
 
   return (
-    <div className="mb-3">
+    <Margin className="b-3">
       <TextField
         label={(!placeholder && 'Search') || ''}
         name="text"
@@ -24,7 +25,7 @@ const Search = ({ onSearch, placeholder }) => {
         className="form-control"
         {...{ placeholder }}
       />
-    </div>
+    </Margin>
   );
 };
 

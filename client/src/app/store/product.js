@@ -65,7 +65,6 @@ const productSlice = createSlice({
       let { item, order } = action.payload;
 
       item = item[0].toLowerCase() + item.slice(1);
-      console.log(item);
 
       const arr = JSON.parse(JSON.stringify(state.entities));
       state.sortedEntities = arr.sort((a, b) => {

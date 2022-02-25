@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useMediaQuery } from 'react-responsive';
 
-import { Image, Col } from '../../common/containers';
+import { Image, Col, Card, Row } from '../../common/containers';
 import {
   Anchor,
   Header,
@@ -38,9 +38,9 @@ const Product = ({ product, imageStyle, ...rest }) => {
   };
 
   return (
-    <div className="card mb-3" {...rest}>
-      <div className="row g-0">
-        <div className="col-md-3">
+    <Card className="mb-3" {...rest}>
+      <Row className="g-0">
+        <Col className="-md-3">
           <Anchor to={`/${product._id}`}>
             <Image
               src={product.photo}
@@ -49,9 +49,9 @@ const Product = ({ product, imageStyle, ...rest }) => {
               style={getImageStyle()}
             />
           </Anchor>
-        </div>
-        <div className="col-md-6">
-          <div className="card-body">
+        </Col>
+        <Col className="-md-6">
+          <Card className="-body">
             <Header size={5}>{product.name}</Header>
             <Paragraph className="card-text">Price: {product.price}$</Paragraph>
             <Paragraph className="card-text">Count: {product.count}</Paragraph>
@@ -65,8 +65,8 @@ const Product = ({ product, imageStyle, ...rest }) => {
                 product.updatedAt
               ).toLocaleString()}`}</SmallText>
             </Paragraph>
-          </div>
-        </div>
+          </Card>
+        </Col>
         <Col>
           {cart.find((prod) => prod._id === product._id) ? (
             <Button
@@ -86,8 +86,8 @@ const Product = ({ product, imageStyle, ...rest }) => {
             </Button>
           )}
         </Col>
-      </div>
-    </div>
+      </Row>
+    </Card>
   );
 };
 

@@ -4,6 +4,9 @@ import PropTypes from 'prop-types';
 import { displayDate } from '../../../core/displayDate';
 import { useSelector } from 'react-redux';
 import { getCurrentUserId, getUserById } from '../../../store/user';
+import { BackGround, Col, Flex, Image, Margin } from '../../common/containers';
+import { Button, Paragraph, SmallText } from '../../common/text';
+import Remove from '../../common/icons/remove';
 
 const Comment = ({
   content,
@@ -17,38 +20,38 @@ const Comment = ({
   const user = useSelector(getUserById(userId));
 
   return (
-    <div className={(message && 'col-6') || 'col'}>
-      <div className="bg-light card-body  mb-3">
-        <div className="d-flex flex-start ">
-          <img
+    <Col className={(message && '-6') || ''}>
+      <BackGround className="-light card-body  mb-3">
+        <Flex className="flex-start ">
+          <Image
             src={user.image}
             className="rounded-circle shadow-1-strong me-3"
             alt="avatar"
             width="65"
             height="65"
           />
-          <div className="flex-grow-1 flex-shrink-1">
-            <div className="mb-4">
-              <div className="d-flex justify-content-between align-items-center">
-                <p className="mb-1 ">
+          <Flex className="-grow-1 flex-shrink-1">
+            <Margin className="mb-4">
+              <Flex className="justify-content-between align-items-center">
+                <Margin className="b-1 ">
                   {user && user.name}{' '}
-                  <span className="small">- {displayDate(created)}</span>
-                </p>
+                  <SmallText>- {displayDate(created)}</SmallText>
+                </Margin>
                 {currentUserId === userId && (
-                  <button
-                    className="btn btn-sm text-primary d-flex align-items-center"
+                  <Button
+                    className="btn-sm text-primary d-flex align-items-center"
                     onClick={() => onRemove(id)}
                   >
-                    <i className="bi bi-x-lg"></i>
-                  </button>
+                    <Remove />
+                  </Button>
                 )}
-              </div>
-              <p className="small mb-0">{content}</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+              </Flex>
+              <Paragraph className="small mb-0">{content}</Paragraph>
+            </Margin>
+          </Flex>
+        </Flex>
+      </BackGround>
+    </Col>
   );
 };
 Comment.propTypes = {

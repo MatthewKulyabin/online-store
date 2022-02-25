@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 
 import UserCard from '../../ui/userCard';
 import { getUserById } from '../../../store/user';
@@ -9,21 +9,13 @@ import DialogsPanel from '../../ui/messenger/dialogsPanel';
 import Dialog from '../../ui/messenger/dialog';
 import AddCommentForm from '../../ui/comments/addCommentForm';
 import { Header } from '../../common/text';
-import { getMessageState, loadMessagesList } from '../../../store/message';
-import Loader from '../../common/loader';
+import MessageLoader from '../../ui/hoc/messageLoader';
 
 const UserPage = () => {
-  const dispatch = useDispatch();
-
   const { userId } = useParams();
   const user = useSelector(getUserById(userId));
-  const { isLoading } = useSelector(getMessageState());
 
   const [chosedDialog, setChosedDialog] = useState();
-
-  useEffect(() => {
-    dispatch(loadMessagesList());
-  }, []);
 
   const handleChooseDialog = (id) => {
     setChosedDialog(id);
@@ -31,7 +23,7 @@ const UserPage = () => {
 
   if (user) {
     return (
-      (!isLoading && (
+      <MessageLoader>
         <Container>
           <Row className="gutters-sm">
             <Col className="-md-4 mb-3">
@@ -55,7 +47,7 @@ const UserPage = () => {
             </Col>
           </Row>
         </Container>
-      )) || <Loader />
+      </MessageLoader>
     );
   } else {
     return <h1>Loading</h1>;

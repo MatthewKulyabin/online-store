@@ -10,6 +10,13 @@ import {
 import { Header } from '../../common/text';
 import Search from '../search';
 import DialogsPanelCard from './dialogsPanelCard';
+import {
+  Card,
+  Container,
+  Flex,
+  HideScrollbar,
+  Margin,
+} from '../../common/containers';
 
 const DialogsPanel = ({ onChooseDialog, chosedDialog }) => {
   const dispatch = useDispatch();
@@ -30,18 +37,17 @@ const DialogsPanel = ({ onChooseDialog, chosedDialog }) => {
         id="tab-content-chats"
         role="tabpanel"
       >
-        <div className="d-flex flex-column h-100 position-relative">
-          <div className="hide-scrollbar">
-            <div className="container py-8">
-              <div className="mb-8">
+        <Flex className="flex-column h-100 position-relative">
+          <HideScrollbar>
+            <Container className="py-8">
+              <Margin className="b-8">
                 <Header size={2} className="fw-bold m-0">
                   Chats
                 </Header>
-              </div>
+              </Margin>
 
               <Search onSearch={handleSearch} placeholder="Search..." />
-
-              <div className="card-list">
+              <Card className="-list">
                 {(searchedUser.length &&
                   searchedUser.map(
                     (u) =>
@@ -66,10 +72,10 @@ const DialogsPanel = ({ onChooseDialog, chosedDialog }) => {
                       )) ||
                       null
                   )}
-              </div>
-            </div>
-          </div>
-        </div>
+              </Card>
+            </Container>
+          </HideScrollbar>
+        </Flex>
       </div>
     )
   );

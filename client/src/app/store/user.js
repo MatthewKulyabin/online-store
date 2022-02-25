@@ -35,6 +35,8 @@ const userSlice = createSlice({
       state.error = null;
     },
     authRequestSuccess: (state, action) => {
+      action.payload && state.entities.push(action.payload);
+
       state.auth = getUserId();
       state.isLoggedIn = true;
     },
@@ -127,8 +129,8 @@ export const createUser = (payload) => async (dispatch) => {
     dispatch(authRequested());
     const { content } = await authService.register(payload);
     setTokens(content);
+    dispatch(authRequestSuccess(content.newUser));
     history.push('/');
-    dispatch(authRequestSuccess({ userId: content.localId }));
   } catch (error) {
     const { code, message } = error.response.data.error;
     if (code === 400) {

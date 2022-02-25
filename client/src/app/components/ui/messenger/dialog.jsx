@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getCurrentUserData, getUserById } from '../../../store/user';
 import { deleteMessage, getDialogMessages } from '../../../store/message';
 import Comment from '../comments/comment';
+import { Container, Flex } from '../../common/containers';
 
 const Dialog = ({ chosedDialog }) => {
   const dispatch = useDispatch();
@@ -18,11 +19,11 @@ const Dialog = ({ chosedDialog }) => {
   };
 
   return (
-    <div className="container overflow-auto" style={{ height: 500 }}>
+    <Container className="overflow-auto" style={{ height: 500 }}>
       {messages.map(
         (m) =>
           (m.receiverId === currentUser._id && (
-            <div key={m._id} className="d-flex justify-content-start">
+            <Flex key={m._id} className="justify-content-start">
               <Comment
                 content={m.text}
                 userId={chosedUser._id}
@@ -31,9 +32,9 @@ const Dialog = ({ chosedDialog }) => {
                 onRemove={() => console.log('Unauthorized')}
                 message={true}
               />
-            </div>
+            </Flex>
           )) || (
-            <div key={m._id} className="d-flex justify-content-end">
+            <Flex key={m._id} className="justify-content-end">
               <Comment
                 content={m.text}
                 userId={currentUser._id}
@@ -42,48 +43,11 @@ const Dialog = ({ chosedDialog }) => {
                 onRemove={(id) => handleDeleteMessage(id)}
                 message={true}
               />
-            </div>
+            </Flex>
           )
       )}
-    </div>
+    </Container>
   );
-  // return (
-  //   (
-  // <div className="container overflow-auto" style={{ height: 500 }}>
-  // <div className="d-flex justify-content-start">
-  //   <Comment
-  //     content="Content"
-  //     userId={users[0]._id}
-  //     created_at={new Date().toString()}
-  //     _id={new Date().toString()}
-  //     onRemove={(data) => console.log(data)}
-  //     message={true}
-  //   />
-  // </div>
-
-  // <div className="d-flex justify-content-end">
-  //   <Comment
-  //     content="Content"
-  //     userId={users[0]._id}
-  //     created_at={new Date().toString()}
-  //     _id={new Date().toString()}
-  //     onRemove={(data) => console.log(data)}
-  //     message={true}
-  //   />
-  // </div>
-  //       <div className="d-flex justify-content-end">
-  //         <Comment
-  //           content="Content"
-  //           userId={users[0]._id}
-  //           created_at={new Date().toString()}
-  //           _id={new Date().toString()}
-  //           onRemove={(data) => console.log(data)}
-  //           message={true}
-  //         />
-  //       </div>
-  //     </div>
-  //   )
-  // );
 };
 
 Dialog.propTypes = {
