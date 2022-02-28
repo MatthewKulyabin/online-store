@@ -23,10 +23,10 @@ const MessageLoader = ({ children }) => {
 };
 
 MessageLoader.propTypes = {
-  children: PropTypes.oneOfType(
+  children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node
-  ),
+    PropTypes.node,
+  ]),
 };
 
 export default MessageLoader;

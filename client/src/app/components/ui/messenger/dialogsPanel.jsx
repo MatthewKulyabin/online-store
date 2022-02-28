@@ -27,7 +27,7 @@ const DialogsPanel = ({ onChooseDialog, chosedDialog }) => {
   const currentUserId = useSelector(getCurrentUserId());
 
   const handleSearch = (text) => {
-    dispatch(searchUser(text));
+    text && dispatch(searchUser(text));
   };
 
   return (
@@ -50,10 +50,10 @@ const DialogsPanel = ({ onChooseDialog, chosedDialog }) => {
               <Card className="-list">
                 {(searchedUser.length &&
                   searchedUser.map(
-                    (u) =>
+                    (u, idx) =>
                       currentUserId !== u._id && (
                         <DialogsPanelCard
-                          key={u._id}
+                          key={idx}
                           {...{ u }}
                           onClick={onChooseDialog}
                           {...{ chosedDialog }}
@@ -61,10 +61,10 @@ const DialogsPanel = ({ onChooseDialog, chosedDialog }) => {
                       )
                   )) ||
                   users.map(
-                    (u) =>
+                    (u, idx) =>
                       (currentUserId !== u._id && (
                         <DialogsPanelCard
-                          key={u._id}
+                          key={idx}
                           {...{ u }}
                           onClick={onChooseDialog}
                           {...{ chosedDialog }}
